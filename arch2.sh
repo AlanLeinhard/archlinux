@@ -27,6 +27,7 @@ echo '127.0.1.1 virt-arch.localdomain virt-arch' >> /etc/hosts
 echo 'Создаем root пароль'
 (
   echo 3571;
+  echo 3571;
 ) | passwd
 
 echo 'Добавляем пользователя'
@@ -34,6 +35,7 @@ useradd -m $username
 
 echo 'Устанавливаем пароль пользователя'
 (
+  echo 3571;
   echo 3571;
 ) | passwd $username
 
