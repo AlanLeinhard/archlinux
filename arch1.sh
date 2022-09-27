@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Arch Linux Fast Install - Быстрая установка Arch Linux https://github.com/ordanax/arch2018
-# Цель скрипта - быстрое развертывание системы с вашими персональными настройками (конфиг XFCE, темы, программы и т.д.).
-
-# В разработке принимали участие:
-# Алексей Бойко https://vk.com/ordanax
-# Степан Скрябин https://vk.com/zurg3
-# Михаил Сарвилин https://vk.com/michael170707
-# Данил Антошкин https://vk.com/danil.antoshkin
-# Юрий Порунцов https://vk.com/poruncov
 
 loadkeys ru
 setfont cyr-sun16
@@ -93,4 +84,4 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # arch-chroot /mnt sh -c arch2.sh $3
 
-arch-chroot /mnt sh -c "$(curl -fsSL git.io/arch2.sh) $3"
+arch-chroot /mnt sh -c "$(curl -fsSL https://github.com/AlanLeinhard/archlinux/blob/main/arch2.sh) $3"
