@@ -133,5 +133,7 @@ sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfs
 
 cd proton-ge-custom-bin/ && makepkg -si && cd
 
+yay -S timeshift
+
 echo 'Установка завершена! Перезагрузите систему.'
 exit
