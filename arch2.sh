@@ -4,7 +4,13 @@ username=virt_alan
 
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
+
+echo '127.0.0.1 localhost' >> /etc/hosts
+echo ':1        localhost' >> /etc/hosts
+echo '127.0.1.1 $hostname.localdomain $hostname' >> /etc/hosts
+
 ln -svf /usr/share/zoneinfo/Europe/Moscow  /etc/localtime
+hwclock --systohc
 
 echo '3.4 Добавляем русскую локаль системы'
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
@@ -19,10 +25,6 @@ echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
-
-echo '127.0.0.1 localhost' >> /etc/hosts
-echo ':1        localhost' >> /etc/hosts
-echo '127.0.1.1 $hostname.localdomain $hostname' >> /etc/hosts
 
 echo 'Создаем root пароль'
 (
@@ -42,7 +44,7 @@ echo 'Устанавливаем пароль пользователя'
 usermod -aG wheel,audio,video,optical,storage $username
 userdbctl groups-of-user $username
 
-pacman -S vim sudo wget htop cups
+pacman -S vim sudo wget htop 
 EDITOR=vim
 
 
@@ -79,7 +81,7 @@ pacman -Syyu
 pacman -S dialog wpa_supplicant --noconfirm 
 
 
-gui_install="xorg xorg-xinit xorg-server xorg-drivers gnome-extra gdm"
+gui_install="xorg xorg-server gnome gnome-extra gdm nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl"
 
 
 echo 'Ставим иксы и драйвера'
@@ -88,9 +90,6 @@ pacman -S $gui_install
 
 echo 'Cтавим DM'
 systemctl enable gdm
-
-echo 'Ставим шрифты'
-pacman -S ttf-liberation ttf-dejavu --noconfirm 
 
 # echo 'Установка базовых программ и пакетов'
 # sudo pacman -S reflector firefox firefox-i18n-ru ufw f2fs-tools dosfstools ntfs-3g alsa-lib alsa-utils file-roller p7zip unrar gvfs aspell-ru pulseaudio pavucontrol --noconfirm
@@ -107,40 +106,31 @@ systemctl enable NetworkManager
 echp 'Ставим AUR'
 sudo pacman -S --needed base-devel git
 
+mkdir Downloads
 mkdir Downloads/aur
 cd Downloads/aur/
 
 it clone https://aur.archlinux.org/yay.git
-cd yay/
-makepkg -si
-cd ..
 git clone https://aur.archlinux.org/firefox-bin.git 
-cd firefox-bin/
-makepkg -si
-cd ..
 git clone https://aur.archlinux.org/telegram-desktop-bin.git
-cd telegram-desktop-bin/
-makepkg -si
-telegram-desktop 
-cd ..
 git clone https://aur.archlinux.org/onlyoffice-bin.git
-cd onlyoffice-bin/
-makepkg -si
-makepkg -si
-cd ..
 git clone https://aur.archlinux.org/visual-studio-code-bin.git 
-cd visual-studio-code-bin/ && makepkg -si && cd ..
 git clone https://aur.archlinux.org/ttf-times-new-roman.git
-cd ttf-times-new-roman/ && makepkg -si && cd ..
-sudo pacman -S steam
 git clone https://aur.archlinux.org/yandex-music-player.git
-ls
-cd yandex-music-player/ && makepkg -si && cd ..
 git clone https://aur.archlinux.org/discord-rpc-bin.git
-cd discord-rpc-bin/ && makepkg -si && cd ..
-cd discord-rpc-bin/ && makepkg -si && cd ..
-sudo pacman -S discord obs audacity krita kdenlive obs-studio mpg mpg123 mpv ntfs-3g dosfstools gamin gvfs gamin gvfs ntfs-3g dosfstools gamin gvfs ntfs-3g gvfs ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer
 git clone https://aur.archlinux.org/proton-ge-custom-bin.git
+
+cd yay/ && makepkg -si && cd ..
+cd firefox-bin/ && makepkg -si && cd ..
+cd telegram-desktop-bin/ && makepkg -si && cd ..
+cd onlyoffice-bin/ && makepkg -si && cd ..
+cd visual-studio-code-bin/ && makepkg -si && cd ..
+cd ttf-times-new-roman/ && makepkg -si && cd ..
+cd yandex-music-player/ && makepkg -si && cd ..
+cd discord-rpc-bin/ && makepkg -si && cd ..
+
+sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer neofetch
+
 cd proton-ge-custom-bin/ && makepkg -si && cd
 
 echo 'Установка завершена! Перезагрузите систему.'
