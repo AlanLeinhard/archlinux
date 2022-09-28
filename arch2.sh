@@ -22,7 +22,7 @@ echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 echo '127.0.0.1 localhost' >> /etc/hosts
 echo ':1        localhost' >> /etc/hosts
-echo '127.0.1.1 virt-arch.localdomain virt-arch' >> /etc/hosts
+echo '127.0.1.1 $hostname.localdomain $hostname' >> /etc/hosts
 
 echo 'Создаем root пароль'
 (
@@ -50,8 +50,8 @@ echo 'Устанавливаем SUDO'
 echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
-echo 'Создадим загрузочный RAM диск'
-mkinitcpio -p linux
+# echo 'Создадим загрузочный RAM диск'
+# mkinitcpio -p linux
 
 echo '3.5 Устанавливаем загрузчик'
 pacman -Syy
@@ -68,7 +68,7 @@ echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo 'Ставим программу для Wi-fi'
-pacman -S dhcpcd
+pacman -Syyu dhcpcd nmcli
 systemctl enable dhcpcd
 
 echo 'Раскомментируем репозиторий multilib Для работы 32-битных приложений в 64-битной системе.'
@@ -103,6 +103,45 @@ pacman -S networkmanager network-manager-applet ppp
 
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable NetworkManager
+
+echp 'Ставим AUR'
+sudo pacman -S --needed base-devel git
+
+mkdir Downloads/aur
+cd Downloads/aur/
+
+it clone https://aur.archlinux.org/yay.git
+cd yay/
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/firefox-bin.git 
+cd firefox-bin/
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/telegram-desktop-bin.git
+cd telegram-desktop-bin/
+makepkg -si
+telegram-desktop 
+cd ..
+git clone https://aur.archlinux.org/onlyoffice-bin.git
+cd onlyoffice-bin/
+makepkg -si
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/visual-studio-code-bin.git 
+cd visual-studio-code-bin/ && makepkg -si && cd ..
+git clone https://aur.archlinux.org/ttf-times-new-roman.git
+cd ttf-times-new-roman/ && makepkg -si && cd ..
+sudo pacman -S steam
+git clone https://aur.archlinux.org/yandex-music-player.git
+ls
+cd yandex-music-player/ && makepkg -si && cd ..
+git clone https://aur.archlinux.org/discord-rpc-bin.git
+cd discord-rpc-bin/ && makepkg -si && cd ..
+cd discord-rpc-bin/ && makepkg -si && cd ..
+sudo pacman -S discord obs audacity krita kdenlive obs-studio mpg mpg123 mpv ntfs-3g dosfstools gamin gvfs gamin gvfs ntfs-3g dosfstools gamin gvfs ntfs-3g gvfs ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer
+git clone https://aur.archlinux.org/proton-ge-custom-bin.git
+cd proton-ge-custom-bin/ && makepkg -si && cd
 
 echo 'Установка завершена! Перезагрузите систему.'
 echo 'Если хотите подключить AUR, установить мои конфиги XFCE, тогда после перезагрзки и входа в систему, установите wget (sudo pacman -S wget) и выполните команду:'
