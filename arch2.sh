@@ -110,30 +110,30 @@ mkdir Downloads
 mkdir Downloads/aur
 cd Downloads/aur/
 
-it clone https://aur.archlinux.org/yay.git
-git clone https://aur.archlinux.org/firefox-bin.git 
-git clone https://aur.archlinux.org/telegram-desktop-bin.git
-git clone https://aur.archlinux.org/onlyoffice-bin.git
-git clone https://aur.archlinux.org/visual-studio-code-bin.git 
-git clone https://aur.archlinux.org/ttf-times-new-roman.git
-git clone https://aur.archlinux.org/yandex-music-player.git
-git clone https://aur.archlinux.org/discord-rpc-bin.git
-git clone https://aur.archlinux.org/proton-ge-custom-bin.git
+# it clone https://aur.archlinux.org/yay.git
+# git clone https://aur.archlinux.org/firefox-bin.git 
+# git clone https://aur.archlinux.org/telegram-desktop-bin.git
+# git clone https://aur.archlinux.org/onlyoffice-bin.git
+# git clone https://aur.archlinux.org/visual-studio-code-bin.git 
+# git clone https://aur.archlinux.org/ttf-times-new-roman.git
+# git clone https://aur.archlinux.org/yandex-music-player.git
+# git clone https://aur.archlinux.org/discord-rpc-bin.git
+# git clone https://aur.archlinux.org/proton-ge-custom-bin.git
 
-cd yay/ && makepkg -si && cd ..
-cd firefox-bin/ && makepkg -si && cd ..
-cd telegram-desktop-bin/ && makepkg -si && cd ..
-cd onlyoffice-bin/ && makepkg -si && cd ..
-cd visual-studio-code-bin/ && makepkg -si && cd ..
-cd ttf-times-new-roman/ && makepkg -si && cd ..
-cd yandex-music-player/ && makepkg -si && cd ..
-cd discord-rpc-bin/ && makepkg -si && cd ..
+# cd yay/ && makepkg -si && cd ..
+# cd firefox-bin/ && makepkg -si && cd ..
+# cd telegram-desktop-bin/ && makepkg -si && cd ..
+# cd onlyoffice-bin/ && makepkg -si && cd ..
+# cd visual-studio-code-bin/ && makepkg -si && cd ..
+# cd ttf-times-new-roman/ && makepkg -si && cd ..
+# cd yandex-music-player/ && makepkg -si && cd ..
+# cd discord-rpc-bin/ && makepkg -si && cd ..
 
-sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer neofetch
+# sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer neofetch
 
-cd proton-ge-custom-bin/ && makepkg -si && cd
+# cd proton-ge-custom-bin/ && makepkg -si && cd
 
-yay -S timeshift
+# yay -S timeshift
 
 echo 'Установка завершена! Перезагрузите систему.'
 exit
