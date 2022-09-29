@@ -78,11 +78,8 @@ echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syyu
 
-pacman -S dialog wpa_supplicant --noconfirm 
-
 
 gui_install="xorg xorg-server gnome gnome-extra gdm nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl"
-
 
 echo 'Ставим иксы и драйвера'
 pacman -S $gui_install
