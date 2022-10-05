@@ -82,4 +82,4 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # arch-chroot /mnt sh -c arch2.sh $3
 
-arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh) $3"
+arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh) $3 $4"

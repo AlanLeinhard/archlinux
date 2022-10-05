@@ -28,8 +28,8 @@ echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 echo 'Создаем root пароль'
 (
-  echo 3571;
-  echo 3571;
+  echo $2;
+  echo $2;
 ) | passwd
 
 echo 'Добавляем пользователя'
@@ -37,14 +37,14 @@ useradd -m $username
 
 echo 'Устанавливаем пароль пользователя'
 (
-  echo 3571;
-  echo 3571;
+  echo $2;
+  echo $2;
 ) | passwd $username
 
 usermod -aG wheel,audio,video,optical,storage $username
 userdbctl groups-of-user $username
 
-pacman -S vim sudo wget htop 
+pacman -S vim sudo wget htop --noconfirm
 EDITOR=vim
 
 
@@ -56,9 +56,9 @@ echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 # mkinitcpio -p linux
 
 echo '3.5 Устанавливаем загрузчик'
-pacman -Syy
-pacman -S grub
-pacman -S efibootmgr dosfstools os-prober mtools
+pacman -Syy --noconfirm
+pacman -S grub --noconfirm
+pacman -S efibootmgr dosfstools os-prober mtools --noconfirm
 
 echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
 
@@ -70,19 +70,19 @@ echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo 'Ставим программу для Wi-fi'
-pacman -Syyu dhcpcd nmcli
+pacman -Syyu dhcpcd nmcli --noconfirm
 systemctl enable dhcpcd
 
 echo 'Раскомментируем репозиторий multilib Для работы 32-битных приложений в 64-битной системе.'
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
-pacman -Syyu
+pacman -Syyu --noconfirm
 
 
 gui_install="xorg xorg-server gnome gnome-extra gdm nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl"
 
 echo 'Ставим иксы и драйвера'
-pacman -S $gui_install
+pacman -S $gui_install --noconfirm
 
 
 echo 'Cтавим DM'
@@ -95,19 +95,19 @@ systemctl enable gdm
 # pacman -S i3-gaps polybar dmenu pcmanfm xterm ttf-font-awesome feh gvfs udiskie ristretto tumbler picom jq --noconfirm
     
 echo 'Ставим сеть'
-pacman -S networkmanager network-manager-applet ppp
+pacman -S networkmanager network-manager-applet ppp --noconfirm
 
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable NetworkManager
 
 echp 'Ставим AUR'
-sudo pacman -S --needed base-devel git
+sudo pacman -S --needed base-devel git --noconfirm
 
 mkdir Downloads
 mkdir Downloads/aur
 cd Downloads/aur/
 
-# it clone https://aur.archlinux.org/yay.git
+# git clone https://aur.archlinux.org/yay.git
 # git clone https://aur.archlinux.org/firefox-bin.git 
 # git clone https://aur.archlinux.org/telegram-desktop-bin.git
 # git clone https://aur.archlinux.org/onlyoffice-bin.git
@@ -126,7 +126,7 @@ cd Downloads/aur/
 # cd yandex-music-player/ && makepkg -si && cd ..
 # cd discord-rpc-bin/ && makepkg -si && cd ..
 
-# sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer neofetch
+# sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer neofetch --noconfirm
 
 # cd proton-ge-custom-bin/ && makepkg -si && cd
 
