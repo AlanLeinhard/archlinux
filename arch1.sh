@@ -14,11 +14,9 @@ echo $disk
 
 efi=550
 
-root=51200
-
 swap=`expr $2 '*' 1024 '*' 2`
 
-home=`expr $disk - $efi - $root - $swap`
+root=`expr $disk - $efi - $swap`
 
 echo '2.4 создание разделов'
 (
@@ -32,12 +30,7 @@ echo '2.4 создание разделов'
   echo n;
   echo;
   echo;
-  echo +50G;
-
-  echo n;
-  echo;
-  echo;
-  echo +$home'M';
+  echo +$root'M';
 
   echo n;
   echo;
@@ -49,7 +42,7 @@ echo '2.4 создание разделов'
   echo 1;
 
   echo t;
-  echo 4;
+  echo 3;
   echo 19;
 
   echo w;
@@ -61,15 +54,13 @@ fdisk -l
 echo '2.4.2 Форматирование дисков'
 mkfs.fat -F32  /dev/$31
 mkfs.ext4  /dev/$32
-mkfs.ext4  /dev/$33
-mkswap /dev/$34
+mkswap /dev/$33
 
 echo '2.4.3 Монтирование дисков'
 mount /dev/$32 /mnt
 mkdir /mnt/{efi,home}
 mount /dev/$31 /mnt/efi
-mount /dev/$33 /mnt/home
-swapon /dev/$34
+swapon /dev/$33
 
 echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
