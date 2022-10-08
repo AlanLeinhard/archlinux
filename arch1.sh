@@ -14,7 +14,7 @@ echo $disk
 
 efi=550
 
-root=20480
+root=51200
 
 swap=`expr $2 '*' 1024 '*' 2`
 
