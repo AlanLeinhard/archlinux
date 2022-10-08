@@ -79,7 +79,7 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syyu --noconfirm
 
 
-gui_install="xorg xorg-server gnome gnome-extra gdm nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl"
+gui_install="xorg xorg-server gnome gnome-extra gdm nvidia nvidia-utils lib32-nvidia-utils nvidia-settings cuda vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl"
 
 echo 'Ставим иксы и драйвера'
 pacman -S $gui_install --noconfirm
@@ -126,7 +126,9 @@ cd Downloads/aur/
 # cd yandex-music-player/ && makepkg -si && cd ..
 # cd discord-rpc-bin/ && makepkg -si && cd ..
 
-# sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine playonlinux base-devel git gvfs ccache grub-customizer neofetch --noconfirm
+# yay -S firefox-bin telegram-desktop-bin onlyoffice-bin visual-studio-code-bin ttf-times-new-roman yandex-music-player discord-rpc-bin ventoy-bin anilibria-winmaclinux gputest --noconfirm
+
+# sudo pacman -S steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine base-devel git gvfs ccache grub-customizer neofetch --noconfirm
 
 # cd proton-ge-custom-bin/ && makepkg -si && cd
 

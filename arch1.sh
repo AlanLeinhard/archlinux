@@ -16,7 +16,7 @@ efi=550
 
 root=20480
 
-swap=`expr $2 '*' 1024`
+swap=`expr $2 '*' 1024 '*' 2`
 
 home=`expr $disk - $efi - $root - $swap`
 
@@ -32,7 +32,7 @@ echo '2.4 создание разделов'
   echo n;
   echo;
   echo;
-  echo +20G;
+  echo +50G;
 
   echo n;
   echo;
