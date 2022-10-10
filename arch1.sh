@@ -52,15 +52,15 @@ echo 'Ваша разметка диска'
 fdisk -l
 
 echo '2.4.2 Форматирование дисков'
-mkfs.fat -F32  /dev/$31
-mkfs.ext4  /dev/$32
-mkswap /dev/$33
+mkfs.fat -F32  /dev/$3p1
+mkfs.ext4  /dev/$3p2
+mkswap /dev/$3p3
 
 echo '2.4.3 Монтирование дисков'
-mount /dev/$32 /mnt
+mount /dev/$3p2 /mnt
 mkdir /mnt/{efi,home}
-mount /dev/$31 /mnt/efi
-swapon /dev/$33
+mount /dev/$3p1 /mnt/efi
+swapon /dev/$3p3
 
 echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
@@ -74,3 +74,5 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # arch-chroot /mnt sh -c arch2.sh $3
 
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh) $3 $4"
+
+reboot
