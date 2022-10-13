@@ -69,6 +69,9 @@ grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
 
+echo 'Ставим программу для Wi-fi'
+pacman -Syyu dhcpcd nmcli --noconfirm
+systemctl enable dhcpcd
 
 echo 'Установка завершена! Перезагрузите систему.'
 exit
