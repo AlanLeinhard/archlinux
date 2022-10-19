@@ -1,6 +1,6 @@
 #!/bin/bash
-hostname=arch-pc
-username=alan
+hostname=$3-pc
+username=$3
 
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
@@ -25,6 +25,13 @@ echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
+
+echo 'Ставим сеть'
+pacman -Syyu dhcpcd nmcli networkmanager network-manager-applet ppp ufw bluez bluez-utils --noconfirm
+
+echo 'Подключаем автозагрузку менеджера входа и интернет'
+systemctl enable dhcpcd NetworkManager ufw bluetooth.service
+systemctl start dhcpcd NetworkManager ufw bluetooth.service
 
 echo 'Создаем root пароль'
 (
@@ -62,16 +69,11 @@ pacman -S efibootmgr dosfstools os-prober mtools --noconfirm
 
 echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
 
-mkdir /boot/EFI
-mount /dev/$1p1 /boot/EFI
+mount --mkdir /dev/$1p1 /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 
 echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
-
-echo 'Ставим программу для Wi-fi'
-pacman -Syyu dhcpcd nmcli --noconfirm
-systemctl enable dhcpcd
 
 echo 'Установка завершена! Перезагрузите систему.'
 exit
