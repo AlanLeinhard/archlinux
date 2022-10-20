@@ -27,7 +27,7 @@ echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
 
 echo 'Ставим сеть'
-pacman -Syyu dhcpcd nmcli networkmanager network-manager-applet ppp ufw bluez bluez-utils --noconfirm
+pacman -Syyu dhcpcd networkmanager ufw bluez bluez-utils --noconfirm
 
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable dhcpcd NetworkManager ufw bluetooth.service
@@ -74,6 +74,8 @@ grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 
 echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
+
+curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh -o /home/$3/arch3.sh
 
 echo 'Установка завершена! Перезагрузите систему.'
 exit

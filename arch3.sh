@@ -8,10 +8,7 @@ pacman -Syyu --noconfirm
             # gnome gdm\
             # plasma sddm konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5\
 
-gui_install="xorg xorg-server xorg-server-devel\
-            awesome\
-            nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl\ 
-            xf86-video xf86-video-amdgpu mesa lib32-mesa"
+gui_install="xorg xorg-server xorg-server-devel xorg-xinit awesome gxkb alacritty nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader"
 
 echo 'Ставим иксы и драйвера'
 pacman -S $gui_install --noconfirm
@@ -21,7 +18,22 @@ echo 'Cтавим DM'
 # systemctl enable gdm
 # systemctl enable sddm
 
-echo 'exec awesome' > ~/.xinitrc
+echo 'gxkb &' > ~/.xinitrc
+echo 'xset b off' >> ~/.xinitrc
+echo 'exec awesome' >> ~/.xinitrc
+
+echo 'export LIBGL_ALWAYS_SOFTWARE=1' >> ~/.bash_profile
+echo '' >> ~/.bash_profile
+echo 'if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then' >> ~/.bash_profile
+echo '	  exec startx' >> ~/.bash_profile
+echo 'fi' >> ~/.bash_profile
+
+mkdir ~/.config/awesome/
+cp /etc/xdg/awesome/rc.lua .config/awesome/
+cp /usr/share/awesome/themes/default/theme.lua .config/awesome/
+
+echo 'os.execute ("pgrep -u $USER -x volumeicon || (volumeicon &)")' >> ~/.config/awesome/rc.lua
+setxkbmap -layout "us,ru" -option grp:alt_space_toggle
 
 echp 'Ставим AUR'
 sudo pacman -S --needed base-devel git --noconfirm
@@ -34,15 +46,17 @@ git clone https://aur.archlinux.org/yay.git
 
 cd yay/ && makepkg -si && cd ..
 
-sudo pacman -S telegram-desktop protontricks firefox docker lshw blkid wmctrl steam discord audacity krita kdenlive obs-studio mpg123 mpv dosfstools gamin ntfs-3g wine base-devel git gvfs ccache grub-customizer neofetch portproton --noconfirm
+sudo pacman -S volumeicon telegram-desktop firefox docker lshw util-linux-libs wmctrl steam discord audacity krita kdenlive obs-studio mpg123 mpv ntfs-3g wine git gvfs ccache grub-customizer neofetch --noconfirm
 
-yay -S onlyoffice-bin visual-studio-code-bin ttf-times-new-roman yandex-music-player ventoy-bin anilibria-winmaclinux proton-ge-custom-bin gputest gnome-browser-connector timeshift --noconfirm
+yay -S onlyoffice-bin visual-studio-code-bin ttf-times-new-roman yandex-music-player ventoy-bin anilibria-winmaclinux timeshift gamin --noconfirm
+# yay -S proton-ge-custom-bin gputest portproton protontricks 
+#  gnome-browser-connector
 
 echo 'WaylandEnable=false' >> sudo vim /etc/gdm/custom.conf
 
 sudo mkinitcpio -P
 sudo X -configure
-sudo cp /etc/X11/xorg.conf.backup /etc/X11/xorg.conf
+# sudo cp /etc/X11/xorg.conf.backup /etc/X11/xorg.conf
 
 sudo groupadd docker
 sudo usermod -aG docker $USER

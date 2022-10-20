@@ -1,13 +1,13 @@
 #!/bin/bash
 
+loadkeys ru
+setfont cyr-sun16
+
 read -p 'Введите имя диска: ' disk_name
 read -p 'Введите размер диска в Б: ' disk
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 read -p 'Введите имя пользователя: ' user_name
 read -p 'Введите пароль пользователя: ' user_pass
-
-loadkeys ru
-setfont cyr-sun16
 
 echo '2.3 Синхронизация системных часов'
 timedatectl set-ntp true
@@ -68,17 +68,20 @@ mount /dev/$disk_name'p2' /mnt
 mount --mkdir /dev/$disk_name'p1' /mnt/efi
 swapon /dev/$disk_name'p3'
 
+
 # echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
 # echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 echo '3.2 Установка основных пакетов'
-pacstrap /mnt base base-devel linux linux-firmware
+pacstrap /mnt base base-devel linux linux-zen linux-firmware
 
 echo '3.3 Настройка системы'
-genfstab -U /mnt >> /mnt/etc/fstab
 
 # arch-chroot /mnt sh -c arch2.sh $disk_name
 
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh) $disk_name $user_pass $user_name"
+
+mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
+genfstab -U /mnt >> /mnt/etc/fstab
 
 reboot
