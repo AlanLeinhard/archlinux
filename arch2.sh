@@ -1,6 +1,11 @@
 #!/bin/bash
-hostname=$3-pc
+hostname=$3-arch-laptop
 username=$3
+
+echo "имя диска $1"
+echo "пароль $2"
+echo "имя пользователя $3"
+read -p 'Верно?' qwertyuioiuytrertyuuytre
 
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname

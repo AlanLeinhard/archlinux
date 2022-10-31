@@ -8,7 +8,10 @@ pacman -Syyu --noconfirm
             # gnome gdm\
             # plasma sddm konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5\
 
-gui_install="xorg xorg-server xorg-server-devel xorg-xinit awesome gxkb alacritty nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader"
+gui_install="xorg xorg-server xorg-server-devel xorg-xinit xorg-setxkbmap awesome alacritty vicious xcompmgr nitrogen lxappearance light vnstat gsmartcontrol"
+#  sudo light -As "sysfs/backlight/amdgpu_bl0" 100
+# volumeicon gxkb
+# nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader lib32-opencl-nvidia opencl-nvidia libxnvctrl
 
 echo 'Ставим иксы и драйвера'
 pacman -S $gui_install --noconfirm
@@ -46,7 +49,7 @@ git clone https://aur.archlinux.org/yay.git
 
 cd yay/ && makepkg -si && cd ..
 
-sudo pacman -S volumeicon telegram-desktop firefox docker lshw util-linux-libs wmctrl steam discord audacity krita kdenlive obs-studio mpg123 mpv ntfs-3g wine git gvfs ccache grub-customizer neofetch --noconfirm
+sudo pacman -S telegram-desktop firefox docker lshw util-linux-libs wmctrl steam discord audacity krita kdenlive obs-studio mpg123 mpv ntfs-3g wine git gvfs ccache grub-customizer neofetch --noconfirm
 
 yay -S onlyoffice-bin visual-studio-code-bin ttf-times-new-roman yandex-music-player ventoy-bin anilibria-winmaclinux timeshift gamin --noconfirm
 # yay -S proton-ge-custom-bin gputest portproton protontricks 

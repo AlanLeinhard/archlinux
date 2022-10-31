@@ -81,7 +81,7 @@ echo '3.3 Настройка системы'
 
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh) $disk_name $user_pass $user_name"
 
-mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
+# mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
 genfstab -U /mnt >> /mnt/etc/fstab
 
-reboot
+# reboot
