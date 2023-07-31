@@ -88,4 +88,4 @@ arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlin
 # mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
 genfstab -U /mnt >> /mnt/etc/fstab
 
-reboot
+# reboot
