@@ -17,7 +17,10 @@ efi=550
 
 swap=`expr $swap '*' 1024 '/' 2`
 
-root=`expr $disk - $efi - $swap`
+root=20
+
+home=`expr $disk - $efi - $root - $swap`
+echo $efi $root $home $swap
 
 echo '2.4 создание разделов'
 (
@@ -31,7 +34,12 @@ echo '2.4 создание разделов'
   echo n;
   echo;
   echo;
-  echo +$root'M';
+  echo +$root'G';
+
+  echo n;
+  echo;
+  echo;
+  echo +$home'M';
 
   echo n;
   echo;
