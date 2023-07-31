@@ -3,6 +3,8 @@
 loadkeys ru
 setfont cyr-sun16
 
+fdisk -l
+
 read -p 'Введите имя диска: ' disk_name
 read -p 'Введите размер диска в Б: ' disk
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
