@@ -82,8 +82,8 @@ pacstrap /mnt base base-devel linux linux-lts linux-firmware linux-headers linux
 echo '3.3 Настройка системы'
 
 # arch-chroot /mnt sh -c arch2.sh $disk_name
-
-arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh) $disk_name $user_pass $user_name"
+read -p 'Введите пароль пользователя: ' temper
+arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)" > out.txt
 
 # mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
 genfstab -U /mnt >> /mnt/etc/fstab
