@@ -22,7 +22,10 @@ swap=`expr $swap '*' 1024 '/' 2`
 root=20
 
 home=`expr $disk - $efi - $root - $swap`
-echo `$efi $root $home $swap`
+echo $efi 
+echo $root 
+echo $home 
+echo $swap
 
 read -p 'Введите temper: ' temper
 
