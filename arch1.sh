@@ -61,16 +61,16 @@ echo 'Ваша разметка диска'
 fdisk -l
 
 echo '2.4.2 Форматирование дисков'
-mkfs.fat -F32  /dev/$disk_name'p1'
-mkfs.btrfs -L / -n 64k  /dev/$disk_name'p2'
-mkfs.ext4 /dev/$disk_name'p3'
-mkswap /dev/$disk_name'p3'
+mkfs.fat -F32  /dev/$disk_name'1'
+mkfs.btrfs -L / -n 64k  /dev/$disk_name'2'
+mkfs.ext4 /dev/$disk_name'3'
+mkswap /dev/$disk_name'4'
 
 echo '2.4.3 Монтирование дисков'
-mount /dev/$disk_name'p2' /mnt
-mount --mkdir /dev/$disk_name'p1' /mnt/efi
-mount --mkdir /dev/$disk_name'p3' /mnt/home
-swapon /dev/$disk_name'p4'
+mount /dev/$disk_name'2' /mnt
+mount --mkdir /dev/$disk_name'1' /mnt/efi
+mount --mkdir /dev/$disk_name'3' /mnt/home
+swapon /dev/$disk_name'4'
 
 
 # echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
