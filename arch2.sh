@@ -1,10 +1,15 @@
 #!/bin/bash
-hostname=$3-arch-laptop
-username=$3
 
-echo "имя диска $1"
-echo "пароль $2"
-echo "имя пользователя $3"
+
+read -p 'Введите имя диска: ' disk_name
+read -p 'Введите имя пользователя: ' user_name
+read -p 'Введите пароль пользователя: ' user_pass
+
+hostname=$user_name-arch-laptop
+
+echo "имя диска $disk_name"
+echo "пароль $user_pass"
+echo "имя пользователя $user_name"
 read -p 'Верно?' qwertyuioiuytrertyuuytre
 
 echo 'Прописываем имя компьютера'
@@ -35,13 +40,13 @@ echo 'Ставим сеть'
 pacman -Syyu dhcpcd networkmanager ufw bluez bluez-utils --noconfirm
 
 echo 'Подключаем автозагрузку менеджера входа и интернет'
-systemctl enable dhcpcd NetworkManager ufw bluetooth.service
-systemctl start dhcpcd NetworkManager ufw bluetooth.service
+systemctl enable dhcpcd NetworkManager ufw bluetooth
+systemctl start dhcpcd NetworkManager ufw bluetooth
 
 echo 'Создаем root пароль'
 (
-  echo $2;
-  echo $2;
+  echo $user_pass;
+  echo $user_pass;
 ) | passwd
 
 echo 'Добавляем пользователя'
@@ -49,8 +54,8 @@ useradd -m $username
 
 echo 'Устанавливаем пароль пользователя'
 (
-  echo $2;
-  echo $2;
+  echo $user_pass;
+  echo $user_pass;
 ) | passwd $username
 
 usermod -aG wheel,audio,video,optical,storage $username
@@ -74,13 +79,13 @@ pacman -S efibootmgr dosfstools os-prober mtools --noconfirm
 
 echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
 
-mount --mkdir /dev/$1p1 /boot/EFI
+mount --mkdir /dev/$disk_namep1 /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 
 echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
 
-curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh -o /home/$3/arch3.sh
+curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch3.sh -o /home/$user_name/arch3.sh
 
 echo 'Установка завершена! Перезагрузите систему.'
 exit
