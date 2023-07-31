@@ -22,7 +22,9 @@ swap=`expr $swap '*' 1024 '/' 2`
 root=20
 
 home=`expr $disk - $efi - $root - $swap`
-echo $efi $root $home $swap
+echo `$efi $root $home $swap`
+
+read -p 'Введите temper: ' temper
 
 echo '2.4 создание разделов'
 (
@@ -67,6 +69,8 @@ echo '2.4 создание разделов'
   echo w;
 ) | fdisk /dev/$disk_name
 
+read -p 'Введите temper: ' temper
+
 echo 'Ваша разметка диска'
 fdisk -l
 
@@ -92,7 +96,7 @@ pacstrap /mnt base base-devel linux linux-lts linux-firmware linux-headers linux
 echo '3.3 Настройка системы'
 
 # arch-chroot /mnt sh -c arch2.sh $disk_name
-read -p 'Введите пароль пользователя: ' temper
+read -p 'Введите temper: ' temper
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)" > out.txt
 
 # mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
