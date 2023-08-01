@@ -99,7 +99,7 @@ swapon /dev/$disk_name$post'4'
 # echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 echo '3.2 Установка основных пакетов'
-pacstrap /mnt base base-devel linux linux-lts linux-firmware linux-headers linux-lts-headers
+pacstrap /mnt base base-devel linux linux-firmware linux-headers
 
 echo '3.3 Настройка системы'
 
