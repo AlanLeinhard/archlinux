@@ -41,7 +41,7 @@ pacman -Syyu dhcpcd networkmanager ufw bluez bluez-utils --noconfirm
 
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable dhcpcd NetworkManager ufw bluetooth
-systemctl start dhcpcd NetworkManager ufw bluetooth
+# systemctl start dhcpcd NetworkManager ufw bluetooth
 
 
 read -p 'Введите temper: ' temper
@@ -52,6 +52,8 @@ echo 'Создаем root пароль'
   echo $user_pass;
 ) | passwd
 
+read -p 'Введите temper: ' temper
+
 echo 'Добавляем пользователя'
 useradd -m $username
 
@@ -60,6 +62,8 @@ echo 'Устанавливаем пароль пользователя'
   echo $user_pass;
   echo $user_pass;
 ) | passwd $username
+
+read -p 'Введите temper: ' temper
 
 usermod -aG wheel,audio,video,optical,storage $username
 userdbctl groups-of-user $username
