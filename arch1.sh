@@ -6,7 +6,14 @@ setfont cyr-sun16
 fdisk -l
 
 read -p 'Введите имя диска: ' disk_name
+
+post=''
+if [[ $disk_name == nvme* ]] 
+then
+post='p'
+fi
 read -p 'Введите размер диска в Б: ' disk
+read -p 'Введите размер root в Гб: ' root
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 
 echo '2.3 Синхронизация системных часов'
@@ -19,9 +26,7 @@ efi=550
 
 swap=`expr $swap '*' 1024 '/' 2`
 
-root=20
-
-home=`expr $disk - $efi - ($root '*' 1024) - $swap`
+home=`expr $disk - $efi - $root '*' 1024 - $swap`
 echo $efi 
 echo $root 
 echo $home 
@@ -78,16 +83,16 @@ echo 'Ваша разметка диска'
 fdisk -l
 
 echo '2.4.2 Форматирование дисков'
-mkfs.fat -F32  /dev/$disk_name'1'
-mkfs.btrfs -L / -n 64k  /dev/$disk_name'2'
-mkfs.ext4 /dev/$disk_name'3'
-mkswap /dev/$disk_name'4'
+mkfs.fat -F32  /dev/$disk_name$post'1'
+mkfs.btrfs -L / -n 64k  /dev/$disk_name$post'2'
+mkfs.ext4 /dev/$disk_name$post'3'
+mkswap /dev/$disk_name$post'4'
 
 echo '2.4.3 Монтирование дисков'
-mount /dev/$disk_name'2' /mnt
-mount --mkdir /dev/$disk_name'1' /mnt/efi
-mount --mkdir /dev/$disk_name'3' /mnt/home
-swapon /dev/$disk_name'4'
+mount /dev/$disk_name$post'2' /mnt
+mount --mkdir /dev/$disk_name$post'1' /mnt/efi
+mount --mkdir /dev/$disk_name$post'3' /mnt/home
+swapon /dev/$disk_name$post'4'
 
 
 # echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
@@ -100,7 +105,7 @@ echo '3.3 Настройка системы'
 
 # arch-chroot /mnt sh -c arch2.sh $disk_name
 read -p 'Введите temper: ' temper
-arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)" > out.txt
+arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
 # mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
 genfstab -U /mnt >> /mnt/etc/fstab

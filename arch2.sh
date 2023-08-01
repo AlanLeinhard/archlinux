@@ -2,6 +2,11 @@
 
 
 read -p 'Введите имя диска: ' disk_name
+post=''
+if [[ $disk_name == nvme* ]] 
+then
+post='p'
+fi
 read -p 'Введите имя пользователя: ' user_name
 read -p 'Введите пароль пользователя: ' user_pass
 
@@ -44,36 +49,30 @@ systemctl enable dhcpcd NetworkManager ufw bluetooth
 # systemctl start dhcpcd NetworkManager ufw bluetooth
 
 
-read -p 'Введите temper: ' temper
-
 echo 'Создаем root пароль'
 (
   echo $user_pass;
   echo $user_pass;
 ) | passwd
 
-read -p 'Введите temper: ' temper
 
 echo 'Добавляем пользователя'
-useradd -m $username
+useradd -m $user_name
 
 echo 'Устанавливаем пароль пользователя'
 (
   echo $user_pass;
   echo $user_pass;
-) | passwd $username
+) | passwd $user_name
 
-read -p 'Введите temper: ' temper
 
-usermod -aG wheel,audio,video,optical,storage $username
-userdbctl groups-of-user $username
+usermod -aG wheel,audio,video,optical,storage $user_name
+userdbctl groups-of-user $user_name
 
-read -p 'Введите temper: ' temper
 
 pacman -S vim sudo wget htop iw --noconfirm
 EDITOR=vim
 
-read -p 'Введите temper: ' temper
 
 
 echo 'Устанавливаем SUDO'
@@ -83,7 +82,6 @@ echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 # echo 'Создадим загрузочный RAM диск'
 # mkinitcpio -p linux
 
-read -p 'Введите temper: ' temper
 
 echo '3.5 Устанавливаем загрузчик'
 pacman -Syy --noconfirm
@@ -92,7 +90,7 @@ pacman -S efibootmgr dosfstools os-prober mtools --noconfirm
 
 echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
 
-mount --mkdir /dev/$disk_namep1 /boot/EFI
+mount --mkdir /dev/$disk_name$post'1' /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 
 echo 'Обновляем grub.cfg'
