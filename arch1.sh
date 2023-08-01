@@ -84,7 +84,7 @@ fdisk -l
 
 echo '2.4.2 Форматирование дисков'
 mkfs.fat -F32  /dev/$disk_name$post'1'
-mkfs.btrfs -L / -n 64k  /dev/$disk_name$post'2'
+mkfs.btrfs -n 64k  /dev/$disk_name$post'2'
 mkfs.ext4 /dev/$disk_name$post'3'
 mkswap /dev/$disk_name$post'4'
 

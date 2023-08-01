@@ -70,7 +70,7 @@ usermod -aG wheel,audio,video,optical,storage $user_name
 userdbctl groups-of-user $user_name
 
 
-pacman -S vim sudo wget htop iw --noconfirm
+pacman -S vim sudo wget htop iw git --noconfirm
 EDITOR=vim
 
 
