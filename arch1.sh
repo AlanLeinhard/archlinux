@@ -21,7 +21,7 @@ swap=`expr $swap '*' 1024 '/' 2`
 
 root=20
 
-home=`expr $disk - $efi - $root - $swap`
+home=`expr $disk - $efi - ($root '*' 1024) - $swap`
 echo $efi 
 echo $root 
 echo $home 

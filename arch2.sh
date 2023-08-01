@@ -43,6 +43,9 @@ echo 'Подключаем автозагрузку менеджера вход�
 systemctl enable dhcpcd NetworkManager ufw bluetooth
 systemctl start dhcpcd NetworkManager ufw bluetooth
 
+
+read -p 'Введите temper: ' temper
+
 echo 'Создаем root пароль'
 (
   echo $user_pass;
@@ -61,8 +64,12 @@ echo 'Устанавливаем пароль пользователя'
 usermod -aG wheel,audio,video,optical,storage $username
 userdbctl groups-of-user $username
 
+read -p 'Введите temper: ' temper
+
 pacman -S vim sudo wget htop iw --noconfirm
 EDITOR=vim
+
+read -p 'Введите temper: ' temper
 
 
 echo 'Устанавливаем SUDO'
@@ -71,6 +78,8 @@ echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 # echo 'Создадим загрузочный RAM диск'
 # mkinitcpio -p linux
+
+read -p 'Введите temper: ' temper
 
 echo '3.5 Устанавливаем загрузчик'
 pacman -Syy --noconfirm
