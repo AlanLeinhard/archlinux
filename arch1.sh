@@ -3,6 +3,9 @@
 loadkeys ru
 setfont cyr-sun16
 
+echo '2.3 Синхронизация системных часов'
+timedatectl set-ntp true
+
 fdisk -l
 
 read -p 'Введите имя диска: ' disk_name
@@ -15,9 +18,6 @@ fi
 read -p 'Введите размер диска в Б: ' disk
 read -p 'Введите размер root в Гб: ' root
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
-
-echo '2.3 Синхронизация системных часов'
-timedatectl set-ntp true
 
 
 disk=`expr $disk / 1048576`
@@ -41,7 +41,7 @@ echo '2.4 создание разделов'
   echo n;
   echo;
   echo;
-  echo +550M;
+  echo +$efi'M';
 
   echo n;
   echo;
@@ -107,7 +107,8 @@ echo '3.3 Настройка системы'
 read -p 'Введите temper: ' temper
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
-# mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
+read -p 'Введите имя пользователя: ' user_name
+mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # reboot

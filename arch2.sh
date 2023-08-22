@@ -29,13 +29,13 @@ hwclock --systohc
 
 echo '3.4 Добавляем русскую локаль системы'
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
+# echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
 
 echo 'Обновим текущую локаль системы'
 locale-gen
 
 echo 'Указываем язык системы'
-echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
+echo "en_US.UTF-8 UTF-8" > /etc/locale.conf
 
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
