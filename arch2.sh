@@ -100,7 +100,7 @@ pacman -S --needed xorg sddm plasma kde-applications --noconfirm
 systemctl enable sddm NetworkManager
 
 
-#readcurl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch3.sh -o /home/$user_name/arch3.sh
+curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch3.sh -o /home/$user_name/arch3.sh
 
 echo 'Установка завершена! Перезагрузите систему.'
 exit
