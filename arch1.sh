@@ -16,7 +16,7 @@ then
 post='p'
 fi
 disk=$(fdisk -l | grep Диск | grep nvme | cut -d , -f 3 | replace ' ' '' | replace 'байт' '')
-read -p 'Введите размер root в Гб: ' root
+# read -p 'Введите размер root в Гб: ' root
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 
 
@@ -26,10 +26,11 @@ efi=550
 
 swap=`expr $swap '*' 1024 '/' 2`
 
-home=`expr $disk - $efi - $root '*' 1024 - $swap`
+# home=`expr $disk - $efi - $root '*' 1024 - $swap`
+root=`expr $disk - $efi - $swap`
 echo $efi 
 echo $root 
-echo $home 
+# echo $home 
 echo $swap
 
 read -p 'Введите temper: ' temper
@@ -46,12 +47,12 @@ echo '2.4 создание разделов'
   echo n;
   echo;
   echo;
-  echo +$root'G';
+  echo +$root'M';
 
-  echo n;
-  echo;
-  echo;
-  echo +$home'M';
+  # echo n;
+  # echo;
+  # echo;
+  # echo +$home'M';
 
   echo n;
   echo;
@@ -66,12 +67,12 @@ echo '2.4 создание разделов'
   echo 2;
   echo 23;
 
-  echo t;
-  echo 3;
-  echo 143;
+  # echo t;
+  # echo 3;
+  # echo 143;
 
   echo t;
-  echo 4;
+  echo 3;
   echo 19;
 
   echo w;
@@ -85,14 +86,14 @@ fdisk -l
 echo '2.4.2 Форматирование дисков'
 mkfs.fat -F32  /dev/$disk_name$post'1'
 mkfs.btrfs -f -n 64k  /dev/$disk_name$post'2'
-mkfs.ext4 /dev/$disk_name$post'3'
-mkswap /dev/$disk_name$post'4'
+# mkfs.ext4 /dev/$disk_name$post'3'
+mkswap /dev/$disk_name$post'3'
 
 echo '2.4.3 Монтирование дисков'
 mount /dev/$disk_name$post'2' /mnt
 mount --mkdir /dev/$disk_name$post'1' /mnt/efi
-mount --mkdir /dev/$disk_name$post'3' /mnt/home
-swapon /dev/$disk_name$post'4'
+# mount --mkdir /dev/$disk_name$post'3' /mnt/home
+swapon /dev/$disk_name$post'3'
 
 
 # echo '3.1 Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
