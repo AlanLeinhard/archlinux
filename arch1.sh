@@ -120,6 +120,7 @@ read -p 'Введите temper: ' temper
 
 
 
+echo "disk_name=$disk_name" >> /mnt/install.env
 echo "hostname=$hostname" >> /mnt/install.env
 echo "root_pass=$root_pass" >> /mnt/install.env
 echo "user_name=$user_name" >> /mnt/install.env
