@@ -92,7 +92,7 @@ pacman -Syy grub efibootmgr dosfstools os-prober mtools --noconfirm
 echo 'GRUB_DISABLE_OS_PROBER=true' >> /etc/default/grub
 
 # mount --mkdir /dev/$disk_name$post'1' /boot/EFI
-grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+grub-install /dev/$disk_name
 
 echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
