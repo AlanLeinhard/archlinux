@@ -7,14 +7,15 @@
 # then
 # post='p'
 # fi
-read -p 'Введите имя пользователя: ' user_name
-read -p 'Введите пароль пользователя: ' user_pass
-
-hostname=arch-laptop
+# read -p 'Введите имя пользователя: ' user_name
+# read -p 'Введите пароль пользователя: ' user_pass
+source /install.env
 
 # echo "имя диска $disk_name"
+echo "имя компьютера $hostname"
+echo "пароль root $root_pass"
 echo "имя пользователя $user_name"
-echo "пароль $user_pass"
+echo "пароль пользователя $user_pass"
 read -p 'Верно?' temper
 
 echo 'Прописываем имя компьютера'
@@ -52,8 +53,8 @@ systemctl enable dhcpcd NetworkManager ufw bluetooth
 
 echo 'Создаем root пароль'
 (
-  echo $user_pass;
-  echo $user_pass;
+  echo $root_pass;
+  echo $root_pass;
 ) | passwd
 
 
@@ -81,6 +82,9 @@ echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
 
+# echo 'Создадим загрузочный RAM диск'
+# mkinitcpio -p linux
+
 
 echo '3.5 Устанавливаем загрузчик'
 pacman -Syy grub efibootmgr dosfstools os-prober mtools --noconfirm
@@ -95,9 +99,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # pacman -S --needed xorg sddm plasma kde-applications --noconfirm
 # systemctl enable sddm
-
-echo 'Создадим загрузочный RAM диск'
-mkinitcpio -p linux
 
 curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch3.sh -o /home/$user_name/arch3.sh
 
