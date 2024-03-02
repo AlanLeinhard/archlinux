@@ -15,7 +15,7 @@ if [[ $disk_name == nvme* ]]
 then
 post='p'
 fi
-disk=$(fdisk -l | grep Диск | grep $disk_name | cut -d , -f 3 | replace ' ' '' | replace 'байт' '')
+disk=$(fdisk -l | grep Диск | grep $disk_name | cut -d , -f 3 | sed "s/ //"| sed "s/байт//")
 # read -p 'Введите размер root в Гб: ' root
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 
