@@ -120,10 +120,10 @@ read -p 'Введите temper: ' temper
 
 
 
-echo "hostname=hostname" >> /mnt/install.env
-echo "root_pass=root_pass" >> /mnt/install.env
-echo "user_name=user_name" >> /mnt/install.env
-echo "user_pass=user_pass" >> /mnt/install.env
+echo "hostname=$hostname" >> /mnt/install.env
+echo "root_pass=$root_pass" >> /mnt/install.env
+echo "user_name=$user_name" >> /mnt/install.env
+echo "user_pass=$user_pass" >> /mnt/install.env
 
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
