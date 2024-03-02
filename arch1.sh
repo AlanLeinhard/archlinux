@@ -11,6 +11,10 @@ fdisk -l
 read -p 'Введите имя диска(vda,sda,nvme и т.д.): ' disk_name
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 read -p 'Смонтировать второй диск(y|n)?: ' for_mkdir
+read -p 'Введите имя компьютера: ' hostname
+read -p 'Введите пароль root: ' root_pass
+read -p 'Введите имя пользователя: ' user_name
+read -p 'Введите пароль пользователя: ' user_pass
 
 post=''
 if [[ $disk_name == nvme* ]] 
@@ -113,6 +117,14 @@ mount --mkdir /dev/sda1 /mnt/home/Data
 fi
 genfstab -U /mnt >> /mnt/etc/fstab
 read -p 'Введите temper: ' temper
+
+
+
+echo "hostname=hostname" >> /mnt/install.env
+echo "root_pass=root_pass" >> /mnt/install.env
+echo "user_name=user_name" >> /mnt/install.env
+echo "user_pass=user_pass" >> /mnt/install.env
+
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
 
