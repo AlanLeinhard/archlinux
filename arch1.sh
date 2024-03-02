@@ -8,7 +8,7 @@ timedatectl set-ntp true
 
 fdisk -l
 
-read -p 'Введите имя диска: ' disk_name
+read -p 'Введите имя диска(vda,sda,nvme и т.д.): ' disk_name
 
 post=''
 if [[ $disk_name == nvme* ]] 
@@ -78,10 +78,10 @@ echo '2.4 создание разделов'
   echo w;
 ) | fdisk /dev/$disk_name
 
-read -p 'Введите temper: ' temper
-
 echo 'Ваша разметка диска'
 fdisk -l
+
+read -p 'Введите temper: ' temper
 
 echo '2.4.2 Форматирование дисков'
 mkfs.fat -F32  /dev/$disk_name$post'1'
