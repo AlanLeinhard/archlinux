@@ -127,5 +127,7 @@ echo "user_pass=user_pass" >> /mnt/install.env
 
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
+umount -R /mnt
+
 
 # reboot
