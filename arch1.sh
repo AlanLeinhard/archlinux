@@ -15,7 +15,7 @@ if [[ $disk_name == nvme* ]]
 then
 post='p'
 fi
-read -p 'Введите размер диска в Б: ' disk
+disk=$(fdisk -l | grep Диск | grep nvme | cut -d , -f 3 | replace ' ' '' | replace 'байт' '')
 read -p 'Введите размер root в Гб: ' root
 read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 
@@ -107,8 +107,7 @@ echo '3.3 Настройка системы'
 read -p 'Введите temper: ' temper
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
-read -p 'Введите имя пользователя: ' user_name
-mount --mkdir /dev/sda1 /mnt/home/$user_name/Data
+mount --mkdir /dev/sda1 /mnt/home/Data
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # reboot
