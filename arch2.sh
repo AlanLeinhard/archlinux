@@ -10,12 +10,12 @@ fi
 read -p 'Введите имя пользователя: ' user_name
 read -p 'Введите пароль пользователя: ' user_pass
 
-hostname=$user_name-arch-laptop
+hostname=arch-laptop
 
 echo "имя диска $disk_name"
-echo "пароль $user_pass"
 echo "имя пользователя $user_name"
-read -p 'Верно?' qwertyuioiuytrertyuuytre
+echo "пароль $user_pass"
+read -p 'Верно?' temper
 
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
@@ -24,22 +24,23 @@ echo '127.0.0.1 localhost' >> /etc/hosts
 echo ':1        localhost' >> /etc/hosts
 echo '127.0.1.1 $hostname.localdomain $hostname' >> /etc/hosts
 
-ln -svf /usr/share/zoneinfo/Europe/Moscow  /etc/localtime
+ln -svf /usr/share/zoneinfo/Asia/Yekaterinburg  /etc/localtime
 hwclock --systohc
 
 echo '3.4 Добавляем русскую локаль системы'
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-# echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
+echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen 
 
 echo 'Обновим текущую локаль системы'
 locale-gen
 
 echo 'Указываем язык системы'
-echo "en_US.UTF-8 UTF-8" > /etc/locale.conf
+# echo "en_US.UTF-8 UTF-8" > /etc/locale.conf
+echo "ru_RU.UTF-8 UTF-8" > /etc/locale.conf
 
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
-echo 'KEYMAP=ru' >> /etc/vconsole.conf
-echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
+echo 'KEYMAP=ruwin_alt-UTF-8' >> /etc/vconsole.conf
+echo 'FONT=UniCyr_8x16' >> /etc/vconsole.conf
 
 echo 'Ставим сеть'
 pacman -Syyu dhcpcd networkmanager ufw bluez bluez-utils --noconfirm
@@ -79,8 +80,6 @@ echo 'Устанавливаем SUDO'
 echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
-# echo 'Создадим загрузочный RAM диск'
-# mkinitcpio -p linux
 
 
 echo '3.5 Устанавливаем загрузчик'
@@ -96,9 +95,11 @@ grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 echo 'Обновляем grub.cfg'
 grub-mkconfig -o /boot/grub/grub.cfg
 
-pacman -S --needed xorg sddm plasma kde-applications --noconfirm
-systemctl enable sddm NetworkManager
+# pacman -S --needed xorg sddm plasma kde-applications --noconfirm
+# systemctl enable sddm
 
+echo 'Создадим загрузочный RAM диск'
+mkinitcpio -p linux
 
 curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch3.sh -o /home/$user_name/arch3.sh
 
