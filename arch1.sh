@@ -9,6 +9,8 @@ timedatectl set-ntp true
 fdisk -l
 
 read -p 'Введите имя диска(vda,sda,nvme и т.д.): ' disk_name
+read -p 'Введите размер оперативной пямяти в ГБ: ' swap
+read -p 'Смонтировать второй диск(y|n)?: ' for_mkdir
 
 post=''
 if [[ $disk_name == nvme* ]] 
@@ -18,7 +20,6 @@ fi
 disk=$(fdisk -l | grep Disk | grep $disk_name | cut -d , -f 2 | sed "s/ //"| sed "s/bytes//")
 echo $disk 
 # read -p 'Введите размер root в Гб: ' root
-read -p 'Введите размер оперативной пямяти в ГБ: ' swap
 
 
 disk=`expr $disk / 1048576`
@@ -106,7 +107,6 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers vim
 echo '3.3 Настройка системы'
 
 # arch-chroot /mnt sh -c arch2.sh $disk_name
-read -p 'Смонтировать второй диск(y|n)?: ' for_mkdir
 if [[ $for_mkdir == y ]] 
 then
 mount --mkdir /dev/sda1 /mnt/home/Data
