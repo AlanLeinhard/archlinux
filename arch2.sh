@@ -1,18 +1,18 @@
 #!/bin/bash
 
 
-read -p 'Введите имя диска: ' disk_name
-post=''
-if [[ $disk_name == nvme* ]] 
-then
-post='p'
-fi
+# read -p 'Введите имя диска: ' disk_name
+# post=''
+# if [[ $disk_name == nvme* ]] 
+# then
+# post='p'
+# fi
 read -p 'Введите имя пользователя: ' user_name
 read -p 'Введите пароль пользователя: ' user_pass
 
 hostname=arch-laptop
 
-echo "имя диска $disk_name"
+# echo "имя диска $disk_name"
 echo "имя пользователя $user_name"
 echo "пароль $user_pass"
 read -p 'Верно?' temper
@@ -71,7 +71,7 @@ usermod -aG wheel,audio,video,optical,storage $user_name
 userdbctl groups-of-user $user_name
 
 
-pacman -S vim sudo wget htop iw git --noconfirm
+pacman -S sudo wget htop iw git --noconfirm
 EDITOR=vim
 
 
@@ -83,13 +83,11 @@ echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
 
 
 echo '3.5 Устанавливаем загрузчик'
-pacman -Syy --noconfirm
-pacman -S grub --noconfirm
-pacman -S efibootmgr dosfstools os-prober mtools --noconfirm
+pacman -Syy grub efibootmgr dosfstools os-prober mtools --noconfirm
 
-echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub
+echo 'GRUB_DISABLE_OS_PROBER=true' >> /etc/default/grub
 
-mount --mkdir /dev/$disk_name$post'1' /boot/EFI
+# mount --mkdir /dev/$disk_name$post'1' /boot/EFI
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 
 echo 'Обновляем grub.cfg'
