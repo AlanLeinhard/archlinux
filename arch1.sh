@@ -23,7 +23,7 @@ read -p 'Введите размер оперативной пямяти в ГБ
 
 disk=`expr $disk / 1048576`
 
-efi=550
+efi=128
 
 swap=`expr $swap \* 1024 / 2`
 
@@ -92,7 +92,7 @@ mkswap /dev/$disk_name$post'3'
 
 echo '2.4.3 Монтирование дисков'
 mount /dev/$disk_name$post'2' /mnt
-mount --mkdir /dev/$disk_name$post'1' /mnt/efi
+mount --mkdir /dev/$disk_name$post'1' /mnt/boot
 # mount --mkdir /dev/$disk_name$post'3' /mnt/home
 swapon /dev/$disk_name$post'3'
 
@@ -101,15 +101,19 @@ swapon /dev/$disk_name$post'3'
 # echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
 echo '3.2 Установка основных пакетов'
-pacstrap /mnt base base-devel linux linux-firmware linux-headers
+pacstrap /mnt base base-devel linux linux-firmware linux-headers vim
 
 echo '3.3 Настройка системы'
 
 # arch-chroot /mnt sh -c arch2.sh $disk_name
+read -p 'Смонтировать второй диск(y|n)?: ' for_mkdir
+if [[ $for_mkdir == y ]] 
+then
+mount --mkdir /dev/sda1 /mnt/home/Data
+fi
+genfstab -U /mnt >> /mnt/etc/fstab
 read -p 'Введите temper: ' temper
 arch-chroot /mnt sh -c "$(curl -fsSL https://raw.github.com/AlanLeinhard/archlinux/main/arch2.sh)"
 
-mount --mkdir /dev/sda1 /mnt/home/Data
-genfstab -U /mnt >> /mnt/etc/fstab
 
 # reboot
