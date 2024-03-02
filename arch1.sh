@@ -24,7 +24,7 @@ disk=`expr $disk / 1048576`
 
 efi=550
 
-swap=`expr $swap '*' 1024 '/' 2`
+swap=`expr $swap \* 1024 / 2`
 
 # home=`expr $disk - $efi - $root '*' 1024 - $swap`
 root=`expr $disk - $efi - $swap`
