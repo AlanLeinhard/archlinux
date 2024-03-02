@@ -1,5 +1,5 @@
 #!/bin/bash
-
+start_dir=$(pwd)
 echo 'Раскомментируем репозиторий multilib Для работы 32-битных приложений в 64-битной системе.'
 echo '[multilib]' >> /etc/pacman.conf
 echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
@@ -44,7 +44,7 @@ echo 'Cтавим DM'
 # setxkbmap -layout "us,ru" -option grp:alt_space_toggle
 
 echp 'Ставим AUR'
-sudo pacman -S --needed base-devel git --noconfirm
+sudo pacman -S --needed git --noconfirm
 
 mkdir tools
 cd tools/
@@ -87,3 +87,4 @@ sudo systemctl start docker
 #     -d dpage/pgadmin4
 
 # sudo docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+cd $start_dir
